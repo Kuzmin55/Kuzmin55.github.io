@@ -3,92 +3,761 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Илья Кузьмин — автоматизация, сайты, Telegram-боты</title>
+  <title>Ilya Kuzmin — Automation, Websites, Telegram Bots</title>
+  <meta name="description" content="Илья Кузьмин — автоматизация бизнеса, сайты, Telegram-боты, AI и цифровая инфраструктура. Ilya Kuzmin — business automation, websites, Telegram bots, AI and digital infrastructure." />
   <style>
+    :root {
+      --bg: #0b1020;
+      --bg-soft: rgba(255, 255, 255, 0.04);
+      --card: rgba(255, 255, 255, 0.06);
+      --card-border: rgba(255, 255, 255, 0.12);
+      --text: #f5f7fb;
+      --muted: #a7b0c0;
+      --accent: #7c9cff;
+      --accent-2: #57e3c0;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      --radius: 22px;
+      --max: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0f1115;
-      color: #ffffff;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(124, 156, 255, 0.18), transparent 32%),
+        radial-gradient(circle at top right, rgba(87, 227, 192, 0.12), transparent 28%),
+        linear-gradient(180deg, #08101f 0%, #0b1020 100%);
       line-height: 1.6;
     }
-    .container {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 48px 20px;
-    }
-    h1 {
-      font-size: 42px;
-      margin-bottom: 12px;
-    }
-    h2 {
-      margin-top: 40px;
-      font-size: 28px;
-    }
-    p {
-      font-size: 18px;
-      color: #d0d0d0;
-    }
-    .btn {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 14px 22px;
-      background: #ffffff;
-      color: #111;
+
+    a {
+      color: inherit;
       text-decoration: none;
-      border-radius: 10px;
-      font-weight: bold;
     }
-    .card {
-      background: #171a21;
-      border: 1px solid #2a2f3a;
+
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(16px);
+      background: rgba(6, 10, 20, 0.55);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 76px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 0 24px rgba(124, 156, 255, 0.7);
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .lang-switch {
+      display: inline-flex;
+      padding: 4px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+    }
+
+    .lang-switch button {
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
+
+    .lang-switch button.active {
+      background: linear-gradient(135deg, rgba(124, 156, 255, 0.24), rgba(87, 227, 192, 0.18));
+      color: var(--text);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 20px;
       border-radius: 14px;
-      padding: 20px;
-      margin-top: 16px;
+      font-weight: 700;
+      transition: 0.25s ease;
+      border: 1px solid transparent;
     }
-    ul {
-      padding-left: 20px;
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #90a9ff);
+      color: #08101f;
+      box-shadow: 0 10px 30px rgba(124, 156, 255, 0.3);
     }
-    li {
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .hero {
+      padding: 82px 0 54px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .hero-main,
+    .hero-side,
+    .section-card,
+    .service-card,
+    .contact-card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-main {
+      padding: 42px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-main::before {
+      content: "";
+      position: absolute;
+      inset: auto -80px -80px auto;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(124, 156, 255, 0.28), transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      margin-bottom: 20px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--muted);
+      font-size: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    h1 {
+      margin: 0 0 18px;
+      font-size: clamp(38px, 6vw, 72px);
+      line-height: 0.98;
+      letter-spacing: -0.04em;
+    }
+
+    .hero-subtitle {
+      margin: 0 0 26px;
+      max-width: 720px;
+      font-size: clamp(18px, 2.2vw, 22px);
+      color: var(--muted);
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .hero-points {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .point {
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .point strong {
+      display: block;
+      font-size: 24px;
+      margin-bottom: 6px;
+      letter-spacing: -0.03em;
+    }
+
+    .point span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .hero-side {
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .mini-label {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
       margin-bottom: 10px;
-      color: #d0d0d0;
+    }
+
+    .side-title {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+    }
+
+    .side-text {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .chip {
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 14px;
+      color: #dfe5f0;
+    }
+
+    section {
+      padding: 18px 0 24px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 42px);
+      letter-spacing: -0.03em;
+    }
+
+    .section-text {
+      max-width: 720px;
+      margin: 0;
+      color: var(--muted);
       font-size: 17px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .service-card {
+      padding: 24px;
+    }
+
+    .service-card h3 {
+      margin: 0 0 10px;
+      font-size: 24px;
+      letter-spacing: -0.03em;
+    }
+
+    .service-card p {
+      margin: 0 0 16px;
+      color: var(--muted);
+    }
+
+    .service-card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: #dfe5f0;
+    }
+
+    .service-card li + li {
+      margin-top: 8px;
+    }
+
+    .about-grid,
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .section-card,
+    .contact-card {
+      padding: 26px;
+    }
+
+    .section-card p,
+    .contact-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .contact-link {
+      display: inline-flex;
+      margin-top: 16px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .footer {
+      padding: 36px 0 60px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    [data-lang-content] {
+      display: none;
+    }
+
+    [data-lang-content].visible {
+      display: block;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .services-grid,
+      .about-grid,
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-points {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-main,
+      .hero-side,
+      .section-card,
+      .service-card,
+      .contact-card {
+        padding: 22px;
+      }
+
+      h1 {
+        font-size: 42px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topbar-inner {
+        min-height: 68px;
+      }
+
+      .controls {
+        justify-content: flex-end;
+      }
+
+      .hero {
+        padding-top: 42px;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Илья Кузьмин</h1>
-    <p>
-      Помогаю бизнесу и экспертам запускать сайты, автоматизировать процессы,
-      дорабатывать Telegram-ботов и внедрять ИИ в рабочие задачи.
-    </p>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <span class="brand-dot"></span>
+        <span>Ilya Kuzmin</span>
+      </div>
 
-    <a class="btn" href="https://t.me/yourusername" target="_blank">Связаться в Telegram</a>
+      <div class="controls">
+        <div class="lang-switch">
+          <button class="lang-btn active" data-lang="ru">RU</button>
+          <button class="lang-btn" data-lang="en">EN</button>
+        </div>
 
-    <h2>Что я делаю</h2>
-
-    <div class="card">
-      <ul>
-        <li>Создание и ведение сайтов</li>
-        <li>Доработка и создание Telegram-ботов</li>
-        <li>ИИ для автоматизации бизнеса</li>
-        <li>Базовая настройка цифровой безопасности</li>
-      </ul>
+        <a class="btn btn-secondary" href="#contact" data-i18n="navContact">Контакты</a>
+      </div>
     </div>
+  </header>
 
-    <h2>Обо мне</h2>
-    <div class="card">
-      <p>
-        Я занимаюсь автоматизацией, веб-решениями, Telegram-инструментами
-        и техническими задачами для бизнеса. Делаю практичные решения без лишней сложности.
-      </p>
-    </div>
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-main">
+          <div class="hero-kicker" data-i18n="heroKicker">Сайты • AI-автоматизация • Telegram-боты • Цифровая инфраструктура</div>
 
-    <h2>Контакты</h2>
-    <div class="card">
-      <p>Telegram: <a href="https://t.me/yourusername" target="_blank" style="color:#fff;">@yourusername</a></p>
+          <div data-lang-content="ru" class="visible">
+            <h1>Помогаю запускать и усиливать digital-инфраструктуру бизнеса</h1>
+            <p class="hero-subtitle">
+              У меня около 10 лет опыта в IT в разных сферах. Разрабатываю сайты, дорабатываю и создаю Telegram-ботов,
+              внедряю AI для автоматизации процессов и помогаю навести порядок в цифровой среде бизнеса.
+            </p>
+          </div>
+
+          <div data-lang-content="en">
+            <h1>I help businesses build and improve their digital infrastructure</h1>
+            <p class="hero-subtitle">
+              I have around 10 years of experience in IT across different domains. I build websites, create and improve Telegram bots,
+              implement AI for business automation, and help organize secure and practical digital workflows.
+            </p>
+          </div>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://t.me/yourusername" target="_blank" rel="noopener" data-i18n="heroBtnPrimary">Связаться в Telegram</a>
+            <a class="btn btn-secondary" href="#services" data-i18n="heroBtnSecondary">Посмотреть услуги</a>
+          </div>
+
+          <div class="hero-points">
+            <div class="point">
+              <strong>10+</strong>
+              <span data-i18n="point1">лет опыта в IT</span>
+            </div>
+            <div class="point">
+              <strong>AI</strong>
+              <span data-i18n="point2">автоматизация и интеграция процессов</span>
+            </div>
+            <div class="point">
+              <strong>24/7</strong>
+              <span data-i18n="point3">фокус на практичном результате</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="hero-side">
+          <div>
+            <div class="mini-label" data-i18n="sideLabel">Ключевая экспертиза</div>
+            <h2 class="side-title" data-lang-content="ru" class="visible">Технические решения под реальные задачи бизнеса</h2>
+            <h2 class="side-title" data-lang-content="en">Technical solutions for real business needs</h2>
+          </div>
+
+          <p class="side-text" data-lang-content="ru" class="visible">
+            Делаю не “ради технологий”, а ради конкретного эффекта: больше заявок, меньше ручной рутины, удобнее процессы, понятнее digital-среда.
+          </p>
+          <p class="side-text" data-lang-content="en">
+            I focus on business outcomes, not technology for its own sake: more leads, less routine work, better workflows, and a clearer digital setup.
+          </p>
+
+          <div class="stack">
+            <span class="chip">Websites</span>
+            <span class="chip">Telegram Bots</span>
+            <span class="chip">AI Automation</span>
+            <span class="chip">Cybersecurity</span>
+            <span class="chip">Integrations</span>
+            <span class="chip">Support</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title" data-lang-content="ru" class="visible">Услуги</h2>
+            <h2 class="section-title" data-lang-content="en">Services</h2>
+          </div>
+        </div>
+
+        <div class="services-grid">
+          <article class="service-card">
+            <h3 data-lang-content="ru" class="visible">Создание и ведение сайтов</h3>
+            <h3 data-lang-content="en">Website Development & Support</h3>
+
+            <p data-lang-content="ru" class="visible">
+              Запуск сайтов под услуги, экспертный бренд, бизнес или продукт с понятной структурой и современной подачей.
+            </p>
+            <p data-lang-content="en">
+              Launching websites for services, personal brands, businesses, and products with clear structure and modern presentation.
+            </p>
+
+            <ul data-lang-content="ru" class="visible">
+              <li>Лендинги и сайты-визитки</li>
+              <li>Обновление и сопровождение существующих сайтов</li>
+              <li>Упаковка услуг и понятная структура страницы</li>
+            </ul>
+            <ul data-lang-content="en">
+              <li>Landing pages and personal/business websites</li>
+              <li>Updates and ongoing website support</li>
+              <li>Clear offer packaging and conversion-focused structure</li>
+            </ul>
+          </article>
+
+          <article class="service-card">
+            <h3 data-lang-content="ru" class="visible">Telegram-боты</h3>
+            <h3 data-lang-content="en">Telegram Bots</h3>
+
+            <p data-lang-content="ru" class="visible">
+              Создание новых ботов и доработка существующих решений под бизнес-процессы, сервис, продажи и автоматизацию.
+            </p>
+            <p data-lang-content="en">
+              Building new bots and improving existing solutions for business processes, client service, sales, and automation.
+            </p>
+
+            <ul data-lang-content="ru" class="visible">
+              <li>Боты под заявки, воронки и уведомления</li>
+              <li>Доработка логики и интеграций</li>
+              <li>Поддержка и развитие после запуска</li>
+            </ul>
+            <ul data-lang-content="en">
+              <li>Bots for leads, funnels, and notifications</li>
+              <li>Logic and integration improvements</li>
+              <li>Support and feature growth after launch</li>
+            </ul>
+          </article>
+
+          <article class="service-card">
+            <h3 data-lang-content="ru" class="visible">AI для автоматизации бизнеса</h3>
+            <h3 data-lang-content="en">AI for Business Automation</h3>
+
+            <p data-lang-content="ru" class="visible">
+              Подбор и внедрение AI-инструментов для снижения ручной нагрузки, ускорения процессов и повышения качества работы команды.
+            </p>
+            <p data-lang-content="en">
+              Selecting and implementing AI tools to reduce manual work, speed up operations, and improve team efficiency.
+            </p>
+
+            <ul data-lang-content="ru" class="visible">
+              <li>AI-ассистенты и автоматизация рутинных задач</li>
+              <li>Интеграция AI в текущие процессы</li>
+              <li>Практичные сценарии без лишней сложности</li>
+            </ul>
+            <ul data-lang-content="en">
+              <li>AI assistants and routine task automation</li>
+              <li>AI integration into existing workflows</li>
+              <li>Practical use cases without unnecessary complexity</li>
+            </ul>
+          </article>
+
+          <article class="service-card">
+            <h3 data-lang-content="ru" class="visible">Базовая цифровая безопасность</h3>
+            <h3 data-lang-content="en">Foundational Digital Security</h3>
+
+            <p data-lang-content="ru" class="visible">
+              Помогаю выстроить базовый порядок в цифровой среде: доступы, структура, безопасные настройки и снижение очевидных рисков.
+            </p>
+            <p data-lang-content="en">
+              Helping businesses build a cleaner and safer digital environment: access control, structure, secure settings, and reduced obvious risks.
+            </p>
+
+            <ul data-lang-content="ru" class="visible">
+              <li>Базовый аудит цифровой среды</li>
+              <li>Настройка безопасных практик</li>
+              <li>Снижение типовых уязвимостей</li>
+            </ul>
+            <ul data-lang-content="en">
+              <li>Basic audit of digital infrastructure</li>
+              <li>Secure setup best practices</li>
+              <li>Reducing common vulnerabilities</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title" data-lang-content="ru" class="visible">Обо мне</h2>
+            <h2 class="section-title" data-lang-content="en">About Me</h2>
+            <p class="section-text" data-lang-content="ru" class="visible">
+              Я работаю на стыке разработки, автоматизации, AI-инструментов и digital-практики. Мне важен не просто код, а понятный результат для клиента.
+            </p>
+            <p class="section-text" data-lang-content="en">
+              I work at the intersection of development, automation, AI tools, and practical digital execution. My focus is not just code, but a clear result for the client.
+            </p>
+          </div>
+        </div>
+
+        <div class="about-grid">
+          <div class="section-card">
+            <p data-lang-content="ru" class="visible">
+              У меня около 10 лет опыта в IT в разных сферах. За это время я работал с разными техническими задачами: сайты, автоматизация,
+              Telegram-инструменты, интеграции, инфраструктура и практичные digital-решения для бизнеса и экспертов.
+            </p>
+            <p data-lang-content="en">
+              I have around 10 years of experience in IT across different areas. Over that time, I worked on websites, automation,
+              Telegram tools, integrations, infrastructure, and practical digital solutions for businesses and experts.
+            </p>
+          </div>
+
+          <div class="section-card">
+            <p data-lang-content="ru" class="visible">
+              Если вам нужен человек, который может понять задачу, предложить рабочее решение и довести его до результата — можно написать мне в Telegram.
+            </p>
+            <p data-lang-content="en">
+              If you need someone who can understand the task, propose a working solution, and deliver a real outcome, feel free to contact me on Telegram.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title" data-lang-content="ru" class="visible">Контакты</h2>
+            <h2 class="section-title" data-lang-content="en">Contact</h2>
+          </div>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-card">
+            <p data-lang-content="ru" class="visible">
+              Самый быстрый способ связаться со мной — написать в Telegram.
+            </p>
+            <p data-lang-content="en">
+              The fastest way to reach me is via Telegram.
+            </p>
+            <a class="contact-link" href="https://t.me/yourusername" target="_blank" rel="noopener">@yourusername</a>
+          </div>
+
+          <div class="contact-card">
+            <p data-lang-content="ru" class="visible">
+              Можно написать по вопросам сайтов, Telegram-ботов, AI-автоматизации и цифровой инфраструктуры.
+            </p>
+            <p data-lang-content="en">
+              You can contact me about websites, Telegram bots, AI automation, and digital infrastructure.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <span>© <span id="year"></span> Ilya Kuzmin</span>
     </div>
-  </div>
+  </footer>
+
+  <script>
+    const translations = {
+      ru: {
+        navContact: "Контакты",
+        heroKicker: "Сайты • AI-автоматизация • Telegram-боты • Цифровая инфраструктура",
+        heroBtnPrimary: "Связаться в Telegram",
+        heroBtnSecondary: "Посмотреть услуги",
+        point1: "лет опыта в IT",
+        point2: "автоматизация и интеграция процессов",
+        point3: "фокус на практичном результате",
+        sideLabel: "Ключевая экспертиза"
+      },
+      en: {
+        navContact: "Contact",
+        heroKicker: "Websites • AI Automation • Telegram Bots • Digital Infrastructure",
+        heroBtnPrimary: "Contact on Telegram",
+        heroBtnSecondary: "View Services",
+        point1: "years of IT experience",
+        point2: "automation and process integration",
+        point3: "focus on practical results",
+        sideLabel: "Core Expertise"
+      }
+    };
+
+    const buttons = document.querySelectorAll(".lang-btn");
+    const i18nNodes = document.querySelectorAll("[data-i18n]");
+    const langNodes = document.querySelectorAll("[data-lang-content]");
+
+    function setLanguage(lang) {
+      document.documentElement.lang = lang;
+
+      buttons.forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.lang === lang);
+      });
+
+      i18nNodes.forEach(node => {
+        const key = node.dataset.i18n;
+        if (translations[lang] && translations[lang][key]) {
+          node.textContent = translations[lang][key];
+        }
+      });
+
+      langNodes.forEach(node => {
+        node.classList.toggle("visible", node.getAttribute("data-lang-content") === lang);
+      });
+
+      localStorage.setItem("site-language", lang);
+    }
+
+    buttons.forEach(btn => {
+      btn.addEventListener("click", () => setLanguage(btn.dataset.lang));
+    });
+
+    const savedLang = localStorage.getItem("site-language") || "ru";
+    setLanguage(savedLang);
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
