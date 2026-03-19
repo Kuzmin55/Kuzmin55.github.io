@@ -261,6 +261,15 @@ h1 {
   font-size: 17px;
 }
 
+.hero-note {
+  margin-top: 18px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--muted);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
 .chips {
   display: flex;
   flex-wrap: wrap;
@@ -300,29 +309,94 @@ h1 {
   font-size: 17px;
 }
 
-.services-grid {
+.audience-grid,
+.problems-grid,
+.cases-grid,
+.process-grid,
+.services-grid,
+.about-grid,
+.contact-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
   gap: 18px;
 }
 
+.audience-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.problems-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.cases-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.process-grid {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.services-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.about-grid,
+.contact-grid {
+  grid-template-columns: 1fr 1fr;
+}
+
+.mini-card,
+.problem-card,
+.case-card,
+.process-card,
 .service-card,
 .info-card,
-.contact-card {
+.contact-card,
+.cta-wide,
+.faq-item {
   padding: 26px;
 }
 
+.mini-card h3,
+.case-card h3,
+.process-card h3,
 .service-card h3 {
   font-size: 24px;
   margin-bottom: 12px;
 }
 
+.mini-card p,
+.problem-card p,
+.case-card p,
+.process-card p,
 .service-card p,
 .info-card p,
-.contact-card p {
+.contact-card p,
+.cta-wide p,
+.faq-item p {
   margin: 0;
   color: var(--muted);
   font-size: 17px;
+}
+
+.problem-number,
+.process-step {
+  display: inline-flex;
+  margin-bottom: 14px;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--accent-2);
+}
+
+.case-tag {
+  display: inline-flex;
+  margin-bottom: 14px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--muted);
+  font-size: 13px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .service-card ul {
@@ -334,11 +408,32 @@ h1 {
   margin-top: 8px;
 }
 
-.about-grid,
-.contact-grid {
+.cta-wide {
+  margin-top: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.faq-list {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
+  gap: 14px;
+}
+
+.faq-item summary {
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 700;
+  list-style: none;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item p {
+  margin-top: 14px;
 }
 
 .contact-link {
@@ -361,8 +456,48 @@ h1 {
   font-size: 14px;
 }
 
+.floating-cta {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 60;
+  min-height: 48px;
+  padding: 0 18px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--accent), #97adff);
+  color: #06111f;
+  font-weight: 800;
+  box-shadow: 0 14px 40px rgba(127, 156, 255, 0.35);
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 1100px) {
+  .problems-grid,
+  .cases-grid,
+  .process-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 980px) {
   .hero-grid,
+  .audience-grid,
+  .problems-grid,
+  .cases-grid,
+  .process-grid,
   .services-grid,
   .about-grid,
   .contact-grid {
@@ -375,10 +510,21 @@ h1 {
 
   .hero-main,
   .hero-side,
+  .mini-card,
+  .problem-card,
+  .case-card,
+  .process-card,
   .service-card,
   .info-card,
-  .contact-card {
+  .contact-card,
+  .cta-wide,
+  .faq-item {
     padding: 22px;
+  }
+
+  .cta-wide {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 
@@ -413,5 +559,11 @@ h1 {
   .section-head {
     align-items: start;
     flex-direction: column;
+  }
+
+  .floating-cta {
+    right: 14px;
+    left: 14px;
+    bottom: 14px;
   }
 }
